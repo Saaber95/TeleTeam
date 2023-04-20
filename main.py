@@ -36,8 +36,8 @@ from core.handlers import send_media
 
 async def start_bot(bot: Bot):
    # await set_commands(bot)
-    await bot.send_message(settings.bots.admin_id, text='Вас приветствует БОТ - раксрашиватель Ч/Б фото\n Пришлите мне фотографию из семейного архива и она заиграет новыми красками!\n')
-    await bot.send_message(settings.bots.admin_id, text='А хотите я ее распечатаю и пришлю вам или вашим родным по почте?\n Вставите в рамку ? Отличный подарок родителям.')
+    await bot.send_message(settings.bots.admin_id, text='Вас приветствует БОТ - TeleTeam!\n')
+#    await bot.send_message(settings.bots.admin_id, text='А хотите я ее распечатаю и пришлю вам или вашим родным по почте?\n Вставите в рамку ? Отличный подарок родителям.')
 
 
 async def stop_bot(bot: Bot):
@@ -112,6 +112,11 @@ async def start():
     #     а зачем нам локация
     #     dp.message.register(get_location, F.location)
     dp.message.register(get_hello, F.text == 'Привет')
+    dp.message.register(get_FAQ, F.text == 'FAQ')
+    dp.message.register(get_COM, F.text == 'Общий канал')
+    dp.message.register(get_CAN, F.text == 'Канал с профилями')
+    dp.message.register(get_ASK, F.text == 'Вопрос/предложение команде Teleteam')
+
     # dp.message.register(get_true_contact, F.contact, IsTrueContact())
     # dp.message.register(get_fake_contact, F.contact)
     #

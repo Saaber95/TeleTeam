@@ -16,8 +16,9 @@ async def get_start(message: Message, bot: Bot):
 
 #    await request.add_data(message.from_user.id, message.from_user.first_name)
 #    await message.answer(f'Сообщение #{counter}')
-    await message.answer(f'<s>Привет {message.from_user.first_name}. Включаю клавиатуру!</s>',
-                         reply_markup=get_reply_keyboard())
+    await message.answer(f'Привет {message.from_user.first_name}. : Отлично! Добро пожаловать в HR-бот Teleteam.  \n ')
+    await message.answer(f'Представьте, что вы едете в лифте в ваш любимый виртуальный офис \n ')
+    await message.answer(f'Двери вот-вот откроются! Пожалуйста, следуйте советам, которые помогут вам \n быстрее адаптироваться в продукте и сразу получать пользу',  reply_markup=get_reply_keyboard())
 
 
 async def get_location(message: Message, bot: Bot):
@@ -36,6 +37,22 @@ async def get_photo(message: Message, bot: Bot):
 
 async def get_hello(message: Message, bot: Bot):
     await message.answer(f'И тебе привет!')
+    json_str = json.dumps(message.dict(), default=str)
+    print(json_str)
+async def get_FAQ(message: Message, bot: Bot):
+    await message.answer(f'Здесь переход в FAQ!')
+    json_str = json.dumps(message.dict(), default=str)
+    print(json_str)
+async def get_COM(message: Message, bot: Bot):
+    await message.answer(f'Здесь переход в общий чай!')
+    json_str = json.dumps(message.dict(), default=str)
+    print(json_str)
+async def get_CAN(message: Message, bot: Bot):
+    await message.answer(f'Здесь переход в Канал с профилями')
+    json_str = json.dumps(message.dict(), default=str)
+    print(json_str)
+async def get_ASK(message: Message, bot: Bot):
+    await message.answer(f' Тут вопросы!')
     json_str = json.dumps(message.dict(), default=str)
     print(json_str)
 async def get_menu(message: Message, bot: Bot):
