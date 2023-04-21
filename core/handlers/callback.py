@@ -18,7 +18,6 @@ async def select_macbook(call: CallbackQuery, bot: Bot, callback_data: MacInfo):
     size = callback_data.size
     chip = callback_data.chip
     year = callback_data.year
-    answer = f'{call.message.from_user.first_name}, ты выбрал Apple Macbook {model} с диагональю экрана ' \
-             f'{size} дюймов, на чипе {chip} {year} года.'
+    answer = f'--ветка Х--'
     await call.message.answer(answer)
     await call.answer()

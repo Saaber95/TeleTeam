@@ -1,6 +1,7 @@
 from aiogram import Bot, Dispatcher
-from aiogram.types import Message, ContentType
-from core.handlers.basic import get_start, get_photo, get_hello, get_menu
+from aiogram.types import FSInputFile
+from aiogram.types import Message, ContentType, FSInputFile
+from core.handlers.basic import get_start, get_photo, get_hello, get_menu, get_FAQ, get_COM, get_CAN, get_ASK
 from core.filters.iscontact import IsTrueContact
 from core.handlers.contact import get_fake_contact, get_true_contact
 import asyncio
@@ -37,10 +38,21 @@ from core.handlers import send_media
 async def start_bot(bot: Bot):
    # await set_commands(bot)
     await bot.send_message(settings.bots.admin_id, text='Вас приветствует БОТ - TeleTeam!\n')
+    # photo = InputFile("photo.png")
+    # await bot.send_photo(chat_id=message.chat.id, photo=photo)
+
+
+#    photo1 = open('photo.jpg', 'rb')
+#    await bot.send_photo(chat_id=settings.bots.admin_id,  photo=photo1 )
+
+    # with open('photo.png', 'rb') as photo:
+    #     await bot.send_photo(chat_id=message.chat.id, photo )
+
 #    await bot.send_message(settings.bots.admin_id, text='А хотите я ее распечатаю и пришлю вам или вашим родным по почте?\n Вставите в рамку ? Отличный подарок родителям.')
 
 
 async def stop_bot(bot: Bot):
+#    await bot.send_message(settings.bots.admin_id, text='Все..устал... Я спать!')
     await bot.send_message(settings.bots.admin_id, text='Все..устал... Я спать!')
 
 
@@ -80,9 +92,11 @@ async def start():
     # dp.message.middleware.register(CounterMiddleware())
     # dp.update.middleware.register(OfficeHoursMiddleware())
     # dp.update.middleware.register(SchedulerMiddleware(scheduler))
-    dp.startup.register(start_bot)
-    dp.shutdown.register(stop_bot)
-    #
+
+    #--------------
+        #dp.startup.register(start_bot)
+        #dp.shutdown.register(stop_bot)
+    #----------------------
     #dp.message.register(send_media.get_audio, Command(commands='audio'))
     # dp.message.register(send_media.get_document, Command(commands='document'))
     # dp.message.register(send_media.get_media_group, Command(commands='mediagroup'))
@@ -102,8 +116,8 @@ async def start():
     #
     # dp.message.register(successful_payment, F.successful_payment)
     # dp.shipping_query.register(shipping_check)
-    # dp.message.register(get_inline, Command(commands='inline'))
-    # dp.callback_query.register(select_macbook, MacInfo.filter(F.model == 'pro'))
+    dp.message.register(get_inline, Command(commands='inline'))
+    dp.callback_query.register(select_macbook, MacInfo.filter(F.model == 'pro'))
     #
     # dp.message.register(get_photo,F.photo )
     #

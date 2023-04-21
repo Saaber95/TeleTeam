@@ -1,5 +1,6 @@
 from aiogram import Bot
 from aiogram.types import Message
+from aiogram.types import FSInputFile
 import json
 from core.keyboards.reply import reply_keyboard, loc_tel_poll_keyboard, get_reply_keyboard
 from core.keyboards.inline import select_macbook, get_inline_keyboard
@@ -8,7 +9,7 @@ from core.utils.dbconnect import Request
 
 async def get_inline(message: Message, bot: Bot):
     await message.answer(f'Привет, {message.from_user.first_name}. Показываю инлайн кнопки!',
-                         reply_markup=get_inline_keyboard())
+                          reply_markup=get_inline_keyboard())
 
 
 #async def get_start(message: Message, bot: Bot, counter: str, request: Request):
@@ -16,9 +17,15 @@ async def get_start(message: Message, bot: Bot):
 
 #    await request.add_data(message.from_user.id, message.from_user.first_name)
 #    await message.answer(f'Сообщение #{counter}')
-    await message.answer(f'Привет {message.from_user.first_name}. : Отлично! Добро пожаловать в HR-бот Teleteam.  \n ')
-    await message.answer(f'Представьте, что вы едете в лифте в ваш любимый виртуальный офис \n ')
-    await message.answer(f'Двери вот-вот откроются! Пожалуйста, следуйте советам, которые помогут вам \n быстрее адаптироваться в продукте и сразу получать пользу',  reply_markup=get_reply_keyboard())
+    await message.answer(f' Добро пожаловать в HR-бот Teleteam.  \n '
+    'Представьте, что вы едете в лифте в ваш любимый виртуальный офис , Двери вот-вот откроются! '
+    'Пожалуйста, следуйте советам, которые помогут вам  быстрее адаптироваться в продукте '
+#    'и сразу получать пользу',  reply_markup=get_reply_keyboard())
+    'и сразу получать пользу')
+    photo = FSInputFile(r'TeleTeam.png')
+    await bot.send_photo(message.chat.id, photo)
+    await message.answer(f'-                ВЫ находитесь в ГЛАВНОМ МЕНЮ                     -\n ',
+                reply_markup = get_inline_keyboard())
 
 
 async def get_location(message: Message, bot: Bot):
@@ -33,6 +40,10 @@ async def get_photo(message: Message, bot: Bot):
 
 
     await bot.download_file(file.file_path, 'photo.jpg')
+    photo1 = open('photo.jpg', 'rb')
+    await bot. send_photo(chat_id = message.chat.id, photo=photo1)
+#        file) download_file(file.file_path, 'photo.jpg')
+
 
 
 async def get_hello(message: Message, bot: Bot):
