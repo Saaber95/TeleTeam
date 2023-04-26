@@ -18,6 +18,13 @@ async def select_macbook(call: CallbackQuery, bot: Bot, callback_data: MacInfo):
     size = callback_data.size
     chip = callback_data.chip
     year = callback_data.year
-    answer = f'--ветка Х--'
+    if size==1 :
+        answer = f'--ветка Х-1-'
+    if size==2 :
+        answer = f'--ветка Х-2-'
+    if size==3 :
+        answer = f'--ветка Х-3-'
+
+
     await call.message.answer(answer)
     await call.answer()

@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 from aiogram.types import FSInputFile
 from aiogram.types import Message, ContentType, FSInputFile
-from core.handlers.basic import get_start, get_photo, get_hello, get_menu, get_FAQ, get_COM, get_CAN, get_ASK
+from core.handlers.basic import get_start, get_photo, get_hello, get_menu, get_NOTHING, get_FAQ, get_COM, get_CAN, get_ASK
 from core.filters.iscontact import IsTrueContact
 from core.handlers.contact import get_fake_contact, get_true_contact
 import asyncio
@@ -15,6 +15,7 @@ from core.handlers.basic import get_location
 from core.handlers.basic import get_inline
 from core.utils.commands import set_commands
 
+from core.handlers.callback import select_macbook
 from core.handlers.callback import select_macbook
 from core.utils.callbackdata import MacInfo
 from core.handlers.pay import order, pre_checkout_query, successful_payment, shipping_check
@@ -116,28 +117,31 @@ async def start():
     #
     # dp.message.register(successful_payment, F.successful_payment)
     # dp.shipping_query.register(shipping_check)
-    dp.message.register(get_inline, Command(commands='inline'))
-    dp.callback_query.register(select_macbook, MacInfo.filter(F.model == 'pro'))
+    dp.message.register(get_inline, Command(commands='menu'))
+    dp.callback_query.register(select_macbook, MacInfo.filter(F.model == '1'))
     #
     # dp.message.register(get_photo,F.photo )
     #
 
+#    dp.message.register(get_start, CommandStart)
     dp.message.register(get_menu, Command(commands=['stop', 'halt']))
+    dp.message.register(get_start, Command(commands=['start']))
     #     а зачем нам локация
     #     dp.message.register(get_location, F.location)
     dp.message.register(get_hello, F.text == 'Привет')
-    dp.message.register(get_FAQ, F.text == 'FAQ')
-    dp.message.register(get_COM, F.text == 'Общий канал')
-    dp.message.register(get_CAN, F.text == 'Канал с профилями')
-    dp.message.register(get_ASK, F.text == 'Вопрос/предложение команде Teleteam')
+    # dp.message.register(get_FAQ, F.text == 'FAQ')
+    # dp.message.register(get_COM, F.text == 'Общий канал')
+    # dp.message.register(get_CAN, F.text == 'Канал с профилями')
+    # dp.message.register(get_ASK, F.text == 'Вопрос/предложение команде Teleteam')
 
     # dp.message.register(get_true_contact, F.contact, IsTrueContact())
     # dp.message.register(get_fake_contact, F.contact)
     #
     #
     dp.message.register(get_photo, F.photo)
+    dp.message.register(get_NOTHING, F.text )
+
     # dp.message.register(get_start, Command(commands=['start', 'run']))
-    dp.message.register(get_start, CommandStart)
 
 
     try:

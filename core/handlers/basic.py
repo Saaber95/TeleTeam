@@ -3,12 +3,13 @@ from aiogram.types import Message
 from aiogram.types import FSInputFile
 import json
 from core.keyboards.reply import reply_keyboard, loc_tel_poll_keyboard, get_reply_keyboard
-from core.keyboards.inline import select_macbook, get_inline_keyboard
+from core.keyboards.inline import  get_inline_keyboard
+#from core.keyboards.inline import select_macbook, get_inline_keyboard
 from core.utils.commands import set_commands, set_default_commands
 from core.utils.dbconnect import Request
 
 async def get_inline(message: Message, bot: Bot):
-    await message.answer(f'Привет, {message.from_user.first_name}. Показываю инлайн кнопки!',
+    await message.answer(f'Привет, {message.from_user.first_name}. ТЫ В ГЛАВНОМ МЕНЮ !',
                           reply_markup=get_inline_keyboard())
 
 
@@ -24,7 +25,7 @@ async def get_start(message: Message, bot: Bot):
     'и сразу получать пользу')
     photo = FSInputFile(r'TeleTeam.png')
     await bot.send_photo(message.chat.id, photo)
-    await message.answer(f'-                ВЫ находитесь в ГЛАВНОМ МЕНЮ                     -\n ',
+    await message.answer(f'-                ВЫ НАХОДИТЕСЬ В ГЛАВНОМ МЕНЮ                     -\n ',
                 reply_markup = get_inline_keyboard())
 
 
@@ -69,6 +70,13 @@ async def get_ASK(message: Message, bot: Bot):
 async def get_menu(message: Message, bot: Bot):
     await message.answer(f'ВКЛ МЕНЮ')
     await set_default_commands(bot)
+
+async def get_NOTHING(message: Message, bot: Bot):
+    await message.answer(f'Я СОВСЕМ ЮНЫЙ БОТ. Я ТОЛЬКО УЧУСЬ.')
+    photo = FSInputFile(r'Vall.jpg')
+    await bot.send_photo(message.chat.id, photo)
+
+
 #    await set_commands(Bot)
 
 

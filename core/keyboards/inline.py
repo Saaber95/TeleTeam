@@ -38,10 +38,11 @@ from core.utils.callbackdata import MacInfo
 
 def get_inline_keyboard():
     keyboard_builder = InlineKeyboardBuilder()
+    keyboard_builder.button(text='FAQ', callback_data=MacInfo(model='1', size=2, chip='m1', year=1))
 
-    keyboard_builder.button(text='FAQ', callback_data=MacInfo(model='air', size=13, chip='m1', year=2020))
-    keyboard_builder.button(text='Общий канал', callback_data=MacInfo(model='pro', size=14, chip='m1', year=2021))
-    keyboard_builder.button(text='Канал с профилями', callback_data=MacInfo(model='pro', size=16, chip='i7', year=2019))
+    keyboard_builder.button(text='Общий канал', callback_data=MacInfo(model='1', size=1, chip='1', year=1))
+
+    keyboard_builder.button(text='Канал с профилями', callback_data=MacInfo(model='1', size=3, chip='1', year=1))
     keyboard_builder.button(text='Teleteam', url='https://rbc.ru')
     # keyboard_builder.button(text='Profile', url='tg://user?id=660089851')
 
