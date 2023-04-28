@@ -38,12 +38,18 @@ from core.utils.callbackdata import MacInfo
 
 def get_inline_keyboard():
     keyboard_builder = InlineKeyboardBuilder()
-    keyboard_builder.button(text='FAQ', callback_data=MacInfo(model='1', size=2, chip='m1', year=1))
+    keyboard_builder.button(text='FAQ', url='https://docs.google.com/document/d/1Rxbrr5mqoa-UlLR-RqmnhF6p8n3S3H8hwuzo0PJezWU/edit')
 
-    keyboard_builder.button(text='Общий канал', callback_data=MacInfo(model='1', size=1, chip='1', year=1))
+    keyboard_builder.button(text='Общий канал', url='https://t.me/c/1873667582/1')
+
+#    keyboard_builder.button(text='Общий канал', callback_data=MacInfo(model='1', size=1, chip='1', year=1))
 
     keyboard_builder.button(text='Канал с профилями', callback_data=MacInfo(model='1', size=3, chip='1', year=1))
     keyboard_builder.button(text='Teleteam', url='https://rbc.ru')
+    keyboard_builder.button(text='RandomCofee', callback_data=MacInfo(model='1', size=4, chip='1', year=1))
+    keyboard_builder.button(text='СЕГОДНЯ',  callback_data=MacInfo(model='1', size=5, chip='1', year=1))
+    keyboard_builder.button(text='ОПРОСЫ',  callback_data=MacInfo(model='1', size=6, chip='1', year=1))
+    keyboard_builder.button(text='ФОТОСКЛАД',  callback_data=MacInfo(model='1', size=7, chip='1', year=1))
     # keyboard_builder.button(text='Profile', url='tg://user?id=660089851')
 
     keyboard_builder.adjust(1)
