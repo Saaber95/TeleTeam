@@ -2,6 +2,9 @@ from aiogram import Bot
 from aiogram.types import Message
 from aiogram.types import FSInputFile
 import json
+import openai
+from core.settings import settings
+
 from core.keyboards.reply import reply_keyboard, loc_tel_poll_keyboard, get_reply_keyboard
 from core.keyboards.inline import  get_inline_keyboard
 #from core.keyboards.inline import select_macbook, get_inline_keyboard
@@ -18,15 +21,17 @@ async def get_start(message: Message, bot: Bot):
 
 #    await request.add_data(message.from_user.id, message.from_user.first_name)
 #    await message.answer(f'Сообщение #{counter}')
-    await message.answer(f' Добро пожаловать в HR-бот Teleteam.  \n '
-    'Представьте, что вы едете в лифте в ваш любимый виртуальный офис , Двери вот-вот откроются! '
-    'Пожалуйста, следуйте советам, которые помогут вам  быстрее адаптироваться в продукте '
-#    'и сразу получать пользу',  reply_markup=get_reply_keyboard())
-    'и сразу получать пользу')
+    await message.answer(f'           Добро пожаловать в HR-бот Teleteam v.3.0       . \n ')
+
+
+
     photo = FSInputFile(r'TeleTeam.png')
     await bot.send_photo(message.chat.id, photo)
-    await message.answer(f'-                ВЫ НАХОДИТЕСЬ В ГЛАВНОМ МЕНЮ                     -\n ',
-                reply_markup = get_inline_keyboard())
+    await message.answer(f'.                ГЛАВНОЕ  МЕНЮ                     .\n ',
+                reply_markup=get_inline_keyboard())
+
+
+
 
 
 async def get_location(message: Message, bot: Bot):
@@ -55,6 +60,33 @@ async def get_FAQ(message: Message, bot: Bot):
     await message.answer(f'Здесь переход в FAQ!')
     json_str = json.dumps(message.dict(), default=str)
     print(json_str)
+
+
+#-----------------------------------------
+
+async def get_vasja(message: Message, bot: Bot):
+    if message.chat.id != settings.oficial and \
+       message.chat.id != settings.profile and \
+       message.chat.id != settings.projects:
+        ask = message.text
+        ask.replace('/Вася','')
+        await message.answer(f'Я Вася. отвечаю.....')
+        json_str = json.dumps(message.dict(), default=str)
+        print(json_str)
+
+        completion = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+#            model="gpt-4",
+            messages=[
+                {"role": "user", "content": ask}
+            ]
+        )
+        await message.answer(completion.choices[0].message.content)
+#-----------------------------------------
+
+
+
+
 async def get_COM(message: Message, bot: Bot):
     await message.answer(f'Здесь переход в общий чай!')
     json_str = json.dumps(message.dict(), default=str)
@@ -72,12 +104,42 @@ async def get_menu(message: Message, bot: Bot):
     await set_default_commands(bot)
 
 async def get_NOTHING(message: Message, bot: Bot):
-    await message.answer(f'Я СОВСЕМ ЮНЫЙ БОТ. Я ТОЛЬКО УЧУСЬ.')
-    photo = FSInputFile(r'Vall.jpg')
-    await bot.send_photo(message.chat.id, photo)
+    await message.answer(f' Повторите вопрос.')
+#    photo = FSInputFile(r'Vall.jpg')
+#    await bot.send_photo(message.chat.id, photo)
 
 
 #    await set_commands(Bot)
 
 
 
+async def make_profile(message: Message, bot: Bot):
+    # --------------Чистим--------------------------------#
+
+    chatID = -1001828541503  # ID канала, из которого нужно удалить сообщения
+#    chatID = 1928470387
+    # message_count = 0 # Счетчик удаленных сообщений
+    #
+    # async for message in bot.iter_history(chatID, message_thread_id=6 ):
+    #     try:
+    #         await bot.delete_message(chatID, message.message_id, message_thread_id=6 )
+    #         message_count += 1
+    #     except exceptions.MessageCantBeDeleted:
+    #         pass
+    #
+
+    # --------------Отправляем в канал профили--------------------------------#
+
+    codecs = ["utf-8", "cp1252", "cp437", "utf-16be", "utf-16"]
+    path_pic = r'BASE\PIC\\'
+    path_txt = r'BASE\TXT\\'
+    for i in range(0, 4):
+        name_pic = path_pic + str(i + 1) + '.png'
+        name_txt = path_txt + str(i + 1) + '.txt'
+        photo = FSInputFile(name_pic)
+        text = open(name_txt, encoding=codecs[0]).read()
+
+#        await bot.send_photo(message.chat.id, photo,  caption=text, disable_notification=True)
+
+#        message_thread_id = 1
+        await bot.send_photo(chatID, photo,  caption=text, disable_notification=True)

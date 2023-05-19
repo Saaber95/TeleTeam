@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 from aiogram.types import FSInputFile
 from aiogram.types import Message, ContentType, FSInputFile
-from core.handlers.basic import get_start, get_photo, get_hello, get_menu, get_NOTHING, get_FAQ, get_COM, get_CAN, get_ASK
+from core.handlers.basic import get_start, get_photo, get_hello, get_menu, get_NOTHING, get_vasja, get_COM, get_CAN, get_ASK, make_profile
 from core.filters.iscontact import IsTrueContact
 from core.handlers.contact import get_fake_contact, get_true_contact
 import asyncio
@@ -18,6 +18,11 @@ from core.utils.commands import set_commands
 from core.handlers.callback import select_macbook
 from core.handlers.callback import select_macbook
 from core.utils.callbackdata import MacInfo
+import openai
+openai.api_key = "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"
+
+
+
 from core.handlers.pay import order, pre_checkout_query, successful_payment, shipping_check
 from core.middlewares.countermiddleware import CounterMiddleware
 from core.middlewares.officehours import OfficeHoursMiddleware
@@ -117,6 +122,9 @@ async def start():
     #
     # dp.message.register(successful_payment, F.successful_payment)
     # dp.shipping_query.register(shipping_check)
+    dp.message.register(get_vasja, Command(commands='Вася'))
+    dp.message.register(make_profile, Command(commands=['mprofile']))
+
     dp.message.register(get_inline, Command(commands='menu'))
     dp.callback_query.register(select_macbook, MacInfo.filter(F.model == '1'))
     #

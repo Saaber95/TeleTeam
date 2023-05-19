@@ -33,8 +33,8 @@ async def select_macbook(call: CallbackQuery, bot: Bot, callback_data: MacInfo )
         all_media=[]
         images = glob.glob('images/*.jpg')
         answer = f'--ветка Х-3-'
-        path_pic = r'BASE\PIC\\'
-        path_txt = r'BASE\TXT\\'
+        path_pic = r'BASE/PIC/'
+        path_txt = r'BASE/TXT/'
         for i in range (0, 4):
             name_pic = path_pic + str(i+1) + '.png'
             name_txt = path_txt + str(i+1) + '.txt'
@@ -62,6 +62,6 @@ async def select_macbook(call: CallbackQuery, bot: Bot, callback_data: MacInfo )
         answer = 'Сегодня отмечабт день рождения:....\n А также  сегондня правднуется день взятия бастилии парижскими коммунарами'
 
     if size == 6:
-
+        answer = 'ФОТКИ С КОРПОРАТИВА( Вы УВЕРЕНЫ ЧТО ХОТИТЕ ЭТО УВИДЕТЬ ?)'
     #    https: // t.me / c / 1873667582 / 1
-    await call.message.answer(answer)
+        await call.message.answer(answer)
