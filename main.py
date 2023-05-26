@@ -1,7 +1,7 @@
 from aiogram import Bot, Dispatcher
 from aiogram.types import FSInputFile
 from aiogram.types import Message, ContentType, FSInputFile
-from core.handlers.basic import get_start, get_photo, get_hello, get_menu, get_NOTHING, get_vasja, get_COM, get_CAN, get_ASK, make_profile
+from core.handlers.basic import get_start, get_photo, get_hello, get_menu, get_NOTHING, get_vasja, get_COM, get_CAN, set_task, make_profile, init_google_sheets
 from core.filters.iscontact import IsTrueContact
 from core.handlers.contact import get_fake_contact, get_true_contact
 import asyncio
@@ -18,8 +18,18 @@ from core.utils.commands import set_commands
 from core.handlers.callback import select_macbook
 from core.handlers.callback import select_macbook
 from core.utils.callbackdata import MacInfo
+#  это к chat gpt
 import openai
 openai.api_key = "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"
+#   это к гугл таблицам
+import gspread
+from gspread import Cell, Client, Spreadsheet, Worksheet
+from  work_with_googl import  show_available_worksheets,show_main_ws,create_ws_fill_and_del, \
+    insert_some_data, append_rows,update_table_by_cells, show_all_values_in_ws, create_and_fill_comments_ws, show_worksheet
+
+from gspread.utils import rowcol_to_a1
+import requests
+
 
 
 
@@ -122,7 +132,8 @@ async def start():
     #
     # dp.message.register(successful_payment, F.successful_payment)
     # dp.shipping_query.register(shipping_check)
-    dp.message.register(get_vasja, Command(commands='Вася'))
+    dp.message.register(get_vasja, Command(commands='R2D2'))
+    dp.message.register(set_task, Command(commands=['task', 'Task', 'TASK']))
     dp.message.register(make_profile, Command(commands=['mprofile']))
 
     dp.message.register(get_inline, Command(commands='menu'))
@@ -158,6 +169,14 @@ async def start():
         await bot.session.close()
 
 if __name__ == "__main__":
+    init_google_sheets()
+
+
+
+
+# ---------------
+
+
     asyncio.run(start())
 
 

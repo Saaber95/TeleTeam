@@ -4,6 +4,15 @@ from aiogram.types import FSInputFile
 import json
 import openai
 from core.settings import settings
+import string
+SPREADSHEET_URL = "https://docs.google.com/spreadsheets/d/1S4Xzkcy2DDVnb6WlzkaOQwxob0vAZgKTx-MuZIPDYpo/edit#gid=0"
+
+
+import gspread
+from gspread import Cell, Client, Spreadsheet, Worksheet
+
+from  work_with_googl import  show_available_worksheets,show_main_ws,create_ws_fill_and_del, \
+    insert_some_data, append_rows,update_table_by_cells, show_all_values_in_ws, create_and_fill_comments_ws, show_worksheet
 
 from core.keyboards.reply import reply_keyboard, loc_tel_poll_keyboard, get_reply_keyboard
 from core.keyboards.inline import  get_inline_keyboard
@@ -69,8 +78,8 @@ async def get_vasja(message: Message, bot: Bot):
        message.chat.id != settings.profile and \
        message.chat.id != settings.projects:
         ask = message.text
-        ask.replace('/Вася','')
-        await message.answer(f'Я Вася. отвечаю.....')
+        ask.replace('/R2D2','')
+        await message.answer(f'@R2D2> готовлю ответ.')
         json_str = json.dumps(message.dict(), default=str)
         print(json_str)
 
@@ -84,6 +93,43 @@ async def get_vasja(message: Message, bot: Bot):
         await message.answer(completion.choices[0].message.content)
 #-----------------------------------------
 
+
+def  init_google_sheets():
+    gc: Client = gspread.service_account("./service_account.json")
+    sh: Spreadsheet = gc.open_by_url(SPREADSHEET_URL)
+    print(sh)
+    global ws
+    ws = sh.sheet1
+    show_available_worksheets(sh)
+    show_main_ws(sh)
+    show_all_values_in_ws(ws)
+    print ('WS==', ws)
+
+async def set_task(message: Message, bot: Bot ):
+
+
+    if message.chat.id != settings.oficial and \
+       message.chat.id != settings.profile and \
+       message.chat.id != settings.projects:
+        ask = message.text
+        print (ask)
+        ask.replace('Task', ';')
+        ask.replace('task', ';')
+        ask.replace('TASK', ' ;')
+        print (ask)
+
+
+        words = ask.split(";",6)
+        print(words)
+        print(ws)
+        ws.append_rows([
+                        words,
+                    ])
+
+#    await message.answer(f'Добавлено:',words)
+
+
+#-----------------------------------------
 
 
 
